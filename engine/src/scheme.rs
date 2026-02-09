@@ -1232,6 +1232,30 @@ fn test_parse_error() {
     }
 
     {
+        let err = scheme.parse("str eq str").unwrap_err();
+        assert_eq!(
+            err,
+            ParseError {
+                kind: LexErrorKind::ExpectedName("quoted utf8 or raw or hex string"),
+                input: "str eq str",
+                line_number: 0,
+                span_start: 7,
+                span_len: 3
+            }
+        );
+        assert_eq!(
+            err.to_string(),
+            indoc!(
+                r#"
+                Filter parsing error (1:8):
+                str eq str
+                       ^^^ expected quoted utf8 or raw or hex string
+                "#
+            )
+        );
+    }
+
+    {
         let err = scheme.parse(indoc!(r"concat(0, 0) == 0")).unwrap_err();
         assert_eq!(
             err,
@@ -1625,6 +1649,21 @@ fn test_parse_error_ordering_op() {
                     line_number: 0,
                     span_start: 9,
                     span_len: 1,
+                }
+            );
+        }
+
+        {
+            let filter = format!("str {op} str");
+            let err = scheme.parse(&filter).unwrap_err();
+            assert_eq!(
+                err,
+                ParseError {
+                    kind: LexErrorKind::ExpectedName("quoted utf8 or raw or hex string"),
+                    input: &filter,
+                    line_number: 0,
+                    span_start: 7,
+                    span_len: 3,
                 }
             );
         }
