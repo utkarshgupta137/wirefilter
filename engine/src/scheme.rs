@@ -66,9 +66,7 @@ impl<'i> Lex<'i> for FieldIndex {
             Ok(_) => RhsValue::lex_with(input, Type::Bytes),
             Err(_) => RhsValue::lex_with(input, Type::Int).map_err(|_| {
                 (
-                    LexErrorKind::ExpectedLiteral(
-                        "expected quoted utf8 string or positive integer",
-                    ),
+                    LexErrorKind::ExpectedName("quoted utf8 string or positive integer"),
                     input,
                 )
             }),
@@ -78,13 +76,13 @@ impl<'i> Lex<'i> for FieldIndex {
             RhsValue::Int(i) => match u32::try_from(i) {
                 Ok(u) => Ok((FieldIndex::ArrayIndex(u), rest)),
                 Err(_) => Err((
-                    LexErrorKind::ExpectedLiteral("expected positive integer as index"),
+                    LexErrorKind::ExpectedName("positive integer as index"),
                     input,
                 )),
             },
             RhsValue::Bytes(b) => match String::from_utf8(b.into()) {
                 Ok(s) => Ok((FieldIndex::MapKey(s), rest)),
-                Err(_) => Err((LexErrorKind::ExpectedLiteral("expected utf8 string"), input)),
+                Err(_) => Err((LexErrorKind::ExpectedName("utf8 string"), input)),
             },
             _ => unreachable!(),
         }
@@ -1805,7 +1803,7 @@ fn test_field_lex_indexes() {
     assert_ok!(FieldIndex::lex("0"), FieldIndex::ArrayIndex(0));
     assert_err!(
         FieldIndex::lex("-1"),
-        LexErrorKind::ExpectedLiteral("expected positive integer as index"),
+        LexErrorKind::ExpectedName("positive integer as index"),
         "-1"
     );
 
