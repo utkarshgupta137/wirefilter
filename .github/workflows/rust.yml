@@ -16,23 +16,34 @@ jobs:
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           toolchain: stable
-          components: clippy,rustfmt
-      - uses: tombi-toml/setup-tombi@v1
+          components: clippy
       - name: Print versions
         run: |
           cargo --version
           rustc --version
           clippy-driver --version
-          rustfmt --version
-          tombi --version
       - name: Build
         run: cargo build --verbose
       - name: Run tests
         run: cargo test --verbose
       - name: Run clippy
         run: cargo clippy --verbose --all-targets -- -D clippy::all
+
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: nightly
+          components: rustfmt
+      - uses: tombi-toml/setup-tombi@v1
+      - name: Print versions
+        run: |
+          cargo fmt --version
+          tombi --version
       - name: Check code formatting
-        run: cargo fmt --verbose --all -- --check
+        uses: actions-rust-lang/rustfmt@v1
       - name: Check toml formatting
         run: tombi format --check
 
