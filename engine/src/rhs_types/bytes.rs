@@ -147,8 +147,8 @@ impl AsRef<[u8]> for BytesExpr {
 }
 
 impl<'a> IntoIterator for &'a BytesExpr {
-    type Item = &'a u8;
     type IntoIter = std::slice::Iter<'a, u8>;
+    type Item = &'a u8;
 
     #[inline]
     fn into_iter(self) -> std::slice::Iter<'a, u8> {

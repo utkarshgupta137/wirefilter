@@ -138,7 +138,7 @@ pub struct TypeMismatchError {
 }
 
 macro_rules! replace_underscore {
-    ($name:ident ($val_ty:ty)) => {
+    ($name:ident($val_ty:ty)) => {
         Type::$name(_)
     };
     ($name:ident) => {
@@ -859,8 +859,9 @@ impl ExactSizeIterator for IntoIter<'_> {
 }
 
 impl<'a> IntoIterator for LhsValue<'a> {
-    type Item = LhsValue<'a>;
     type IntoIter = IntoIter<'a>;
+    type Item = LhsValue<'a>;
+
     fn into_iter(self) -> Self::IntoIter {
         match self {
             LhsValue::Array(array) => IntoIter::IntoArray(array.into_iter()),

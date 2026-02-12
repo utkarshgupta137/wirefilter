@@ -407,7 +407,7 @@ pub trait FunctionDefinition: Debug + Send + Sync {
     ) -> Box<dyn for<'i, 'a> Fn(FunctionArgs<'i, 'a>) -> Option<LhsValue<'a>> + Sync + Send + 'static>;
 }
 
-/* Simple function APIs */
+// Simple function APIs
 
 type FunctionPtr = for<'i, 'a> fn(FunctionArgs<'i, 'a>) -> Option<LhsValue<'a>>;
 

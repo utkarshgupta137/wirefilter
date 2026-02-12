@@ -316,8 +316,8 @@ impl<'a> Iterator for MapIntoIter<'a> {
 }
 
 impl<'a> IntoIterator for Map<'a> {
-    type Item = (Cow<'a, [u8]>, LhsValue<'a>);
     type IntoIter = MapIntoIter<'a>;
+    type Item = (Cow<'a, [u8]>, LhsValue<'a>);
 
     fn into_iter(self) -> Self::IntoIter {
         match self.data {
@@ -328,8 +328,8 @@ impl<'a> IntoIterator for Map<'a> {
 }
 
 impl<'a, 'b> IntoIterator for &'b Map<'a> {
-    type Item = (&'b [u8], &'b LhsValue<'a>);
     type IntoIter = MapIter<'a, 'b>;
+    type Item = (&'b [u8], &'b LhsValue<'a>);
 
     #[inline]
     fn into_iter(self) -> Self::IntoIter {

@@ -172,7 +172,7 @@ macro_rules! wrap_type {
     };
 }
 
-/* Wrapper types needed by cbindgen to forward declare opaque structs */
+// Wrapper types needed by cbindgen to forward declare opaque structs
 
 #[derive(Debug, Default)]
 #[repr(Rust)]
@@ -668,9 +668,8 @@ pub struct MatchingResult {
 }
 
 impl MatchingResult {
-    #[cfg(test)]
-    const MISSED: Self = Self {
-        status: Status::Success,
+    const ERROR: Self = Self {
+        status: Status::Error,
         matched: false,
     };
     #[cfg(test)]
@@ -678,8 +677,9 @@ impl MatchingResult {
         status: Status::Success,
         matched: true,
     };
-    const ERROR: Self = Self {
-        status: Status::Error,
+    #[cfg(test)]
+    const MISSED: Self = Self {
+        status: Status::Success,
         matched: false,
     };
     const PANIC: Self = Self {
@@ -724,6 +724,14 @@ pub struct UsingResult {
 }
 
 impl UsingResult {
+    const ERROR: Self = Self {
+        status: Status::Error,
+        used: false,
+    };
+    const PANIC: Self = Self {
+        status: Status::Error,
+        used: false,
+    };
     #[cfg(test)]
     const UNUSED: Self = Self {
         status: Status::Success,
@@ -733,14 +741,6 @@ impl UsingResult {
     const USED: Self = Self {
         status: Status::Success,
         used: true,
-    };
-    const ERROR: Self = Self {
-        status: Status::Error,
-        used: false,
-    };
-    const PANIC: Self = Self {
-        status: Status::Error,
-        used: false,
     };
 }
 

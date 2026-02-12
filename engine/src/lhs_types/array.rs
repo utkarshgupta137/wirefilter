@@ -322,8 +322,8 @@ impl ExactSizeIterator for ArrayIntoIter<'_> {
 }
 
 impl<'a> IntoIterator for Array<'a> {
-    type Item = LhsValue<'a>;
     type IntoIter = ArrayIntoIter<'a>;
+    type Item = LhsValue<'a>;
 
     fn into_iter(self) -> Self::IntoIter {
         match self.data {
@@ -357,8 +357,8 @@ impl ExactSizeIterator for ArrayIter<'_, '_> {
 }
 
 impl<'a, 'b> IntoIterator for &'b Array<'a> {
-    type Item = &'b LhsValue<'a>;
     type IntoIter = ArrayIter<'a, 'b>;
+    type Item = &'b LhsValue<'a>;
 
     #[inline]
     fn into_iter(self) -> Self::IntoIter {
