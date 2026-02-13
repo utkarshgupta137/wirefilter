@@ -791,7 +791,7 @@ impl Expr for ComparisonExpr {
 }
 
 #[cfg(test)]
-#[allow(clippy::bool_assert_comparison)]
+#[expect(clippy::bool_assert_comparison)]
 mod tests {
     use super::*;
     use crate::ast::function_expr::{FunctionCallArgExpr, FunctionCallExpr};
@@ -843,7 +843,6 @@ mod tests {
         }
     }
 
-    #[allow(clippy::unnecessary_wraps)]
     fn concat_function<'a>(args: FunctionArgs<'_, 'a>) -> Option<LhsValue<'a>> {
         let mut output = Vec::new();
         for (index, arg) in args.enumerate() {

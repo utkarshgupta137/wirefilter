@@ -28,7 +28,7 @@ pub struct IndexExpr {
     pub indexes: Vec<FieldIndex>,
 }
 
-#[allow(clippy::manual_ok_err)]
+#[expect(clippy::manual_ok_err)]
 #[inline]
 pub fn ok_ref<T, E>(result: &Result<T, E>) -> Option<&T> {
     match result {

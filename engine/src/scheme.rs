@@ -28,7 +28,6 @@ pub struct SchemeMismatchError;
 /// * A map key with [`FieldIndex::MapKey`]
 ///
 /// ```
-/// #[allow(dead_code)]
 /// enum FieldIndex {
 ///     ArrayIndex(u32),
 ///     MapKey(String),

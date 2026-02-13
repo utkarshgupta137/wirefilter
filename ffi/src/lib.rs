@@ -511,6 +511,7 @@ pub extern "C" fn wirefilter_serialize_execution_context_to_json(
     serde_json::to_string(exec_context.as_ref()).into()
 }
 
+#[expect(clippy::not_unsafe_ptr_arg_deref)]
 #[unsafe(no_mangle)]
 pub extern "C" fn wirefilter_deserialize_json_to_execution_context(
     exec_context: &mut ExecutionContext<'_>,
@@ -534,6 +535,7 @@ pub extern "C" fn wirefilter_free_execution_context(exec_context: Box<ExecutionC
     drop(exec_context);
 }
 
+#[expect(clippy::not_unsafe_ptr_arg_deref)]
 #[unsafe(no_mangle)]
 pub extern "C" fn wirefilter_add_json_value_to_execution_context(
     exec_context: &mut ExecutionContext<'_>,
@@ -578,6 +580,7 @@ pub extern "C" fn wirefilter_add_int_value_to_execution_context(
     exec_context.set_field_value_from_name(name, value).is_ok()
 }
 
+#[expect(clippy::not_unsafe_ptr_arg_deref)]
 #[unsafe(no_mangle)]
 pub extern "C" fn wirefilter_add_bytes_value_to_execution_context(
     exec_context: &mut ExecutionContext<'_>,
@@ -822,7 +825,7 @@ pub extern "C" fn wirefilter_get_version() -> StaticRustAllocatedString {
 }
 
 #[cfg(test)]
-#[allow(clippy::bool_assert_comparison)]
+#[expect(clippy::bool_assert_comparison)]
 mod ffi_test {
     use super::*;
     use regex_automata::meta::Regex;

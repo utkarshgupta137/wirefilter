@@ -2,7 +2,7 @@ use super::ValueExpr;
 use super::parse::FilterParser;
 use super::visitor::{Visitor, VisitorMut};
 use crate::FunctionRef;
-use crate::ast::field_expr::{ComparisonExpr, ComparisonOp, ComparisonOpExpr};
+use crate::ast::field_expr::{ComparisonExpr, ComparisonOp};
 use crate::ast::index_expr::IndexExpr;
 use crate::ast::logical_expr::{LogicalExpr, UnaryOp};
 use crate::compiler::Compiler;
@@ -86,17 +86,6 @@ impl FunctionCallArgExpr {
             FunctionCallArgExpr::IndexExpr(index_expr) => index_expr.map_each_count(),
             FunctionCallArgExpr::Literal(_) => 0,
             FunctionCallArgExpr::Logical(_) => 0,
-        }
-    }
-
-    #[allow(dead_code)]
-    pub(crate) fn simplify(self) -> Self {
-        match self {
-            FunctionCallArgExpr::Logical(LogicalExpr::Comparison(ComparisonExpr {
-                lhs,
-                op: ComparisonOpExpr::IsTrue,
-            })) => FunctionCallArgExpr::IndexExpr(lhs),
-            _ => self,
         }
     }
 }
