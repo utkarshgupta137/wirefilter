@@ -68,6 +68,22 @@ unused = { level = "warn", priority = -1 }
 warnings = { level = "warn", priority = -1 }
 # group exceptions
 let-underscore-drop = "allow"
+# ungrouped
+closure-returning-async-block = "warn"
+deprecated-in-future = "warn"
+deref-into-dyn-supertrait = "warn"
+impl-trait-redundant-captures = "warn"
+linker-messages = "warn"
+macro-use-extern-crate = "warn"
+meta-variable-misuse = "warn"
+redundant-imports = "warn"
+redundant-lifetimes = "warn"
+single-use-lifetimes = "warn"
+trivial-numeric-casts = "warn"
+unit-bindings = "warn"
+unused-import-braces = "warn"
+unused-lifetimes = "warn"
+unused-qualifications = "warn"
 
 [profile.dev]
 panic = "unwind"
