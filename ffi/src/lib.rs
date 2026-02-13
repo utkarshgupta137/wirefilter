@@ -1,6 +1,3 @@
-#![allow(clippy::not_unsafe_ptr_arg_deref)]
-#![warn(rust_2018_idioms)]
-
 mod cstring;
 pub mod panic;
 
