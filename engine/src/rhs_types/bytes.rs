@@ -1,14 +1,10 @@
-use crate::{
-    lex::{Lex, LexErrorKind, LexResult, take},
-    strict_partial_ord::StrictPartialOrd,
-};
+use crate::lex::{Lex, LexErrorKind, LexResult, take};
+use crate::strict_partial_ord::StrictPartialOrd;
 use serde::{Serialize, Serializer};
-use std::{
-    fmt::{self, Debug, Formatter},
-    hash::{Hash, Hasher},
-    ops::Deref,
-    str,
-};
+use std::fmt::{self, Debug, Formatter};
+use std::hash::{Hash, Hasher};
+use std::ops::Deref;
+use std::str;
 
 /// BytesFormat describes the format in which the string was expressed
 #[derive(PartialEq, Eq, Copy, Clone)]

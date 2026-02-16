@@ -1,26 +1,20 @@
-use crate::{
-    ast::{
-        FilterAst, FilterValueAst,
-        parse::{FilterParser, ParseError, ParserSettings},
-    },
-    functions::FunctionDefinition,
-    lex::{Lex, LexErrorKind, LexResult, LexWith, expect, span, take_while},
-    list_matcher::ListDefinition,
-    types::{GetType, RhsValue, Type},
-};
+use crate::ast::parse::{FilterParser, ParseError, ParserSettings};
+use crate::ast::{FilterAst, FilterValueAst};
+use crate::functions::FunctionDefinition;
+use crate::lex::{Lex, LexErrorKind, LexResult, LexWith, expect, span, take_while};
+use crate::list_matcher::ListDefinition;
+use crate::types::{GetType, RhsValue, Type};
 use fnv::FnvBuildHasher;
 use serde::de::Visitor;
 use serde::ser::SerializeMap;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use std::collections::HashMap;
 use std::collections::hash_map::Entry;
+use std::convert::TryFrom;
+use std::fmt::{self, Debug, Formatter};
+use std::hash::{Hash, Hasher};
+use std::iter::Iterator;
 use std::sync::Arc;
-use std::{
-    collections::HashMap,
-    convert::TryFrom,
-    fmt::{self, Debug, Formatter},
-    hash::{Hash, Hasher},
-    iter::Iterator,
-};
 use thiserror::Error;
 
 /// An error that occurs if two underlying [schemes](struct@Scheme)
@@ -1270,7 +1264,8 @@ fn test_parse_error() {
 fn test_parse_error_in_op() {
     use cidr::errors::NetworkParseError;
     use indoc::indoc;
-    use std::{net::IpAddr, str::FromStr};
+    use std::net::IpAddr;
+    use std::str::FromStr;
 
     let scheme = &Scheme! {
         num: Int,

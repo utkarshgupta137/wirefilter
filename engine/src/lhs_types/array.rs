@@ -1,19 +1,15 @@
-use crate::{
-    lhs_types::AsRefIterator,
-    types::{CompoundType, GetType, IntoValue, LhsValue, LhsValueSeed, Type, TypeMismatchError},
+use super::TypedMap;
+use super::map::InnerMap;
+use crate::lhs_types::AsRefIterator;
+use crate::types::{
+    CompoundType, GetType, IntoValue, LhsValue, LhsValueSeed, Type, TypeMismatchError,
 };
-use serde::{
-    Serialize, Serializer,
-    de::{self, DeserializeSeed, Deserializer, SeqAccess, Visitor},
-    ser::SerializeSeq,
-};
-use std::{
-    fmt,
-    hash::{Hash, Hasher},
-    hint::unreachable_unchecked,
-};
-
-use super::{TypedMap, map::InnerMap};
+use serde::de::{self, DeserializeSeed, Deserializer, SeqAccess, Visitor};
+use serde::ser::SerializeSeq;
+use serde::{Serialize, Serializer};
+use std::fmt;
+use std::hash::{Hash, Hasher};
+use std::hint::unreachable_unchecked;
 
 // Ideally, we would want to use Cow<'a, LhsValue<'a>> here
 // but it doesnt work for unknown reasons

@@ -1,22 +1,18 @@
-use super::{
-    Expr,
-    function_expr::FunctionCallExpr,
-    parse::FilterParser,
-    visitor::{Visitor, VisitorMut},
-};
-use crate::{
-    ExecutionContext, Scheme,
-    ast::index_expr::{Compare, IndexExpr},
-    compiler::Compiler,
-    filter::CompiledExpr,
-    lex::{Lex, LexErrorKind, LexResult, LexWith, expect, skip_space, span},
-    range_set::RangeSet,
-    rhs_types::{BytesExpr, ExplicitIpRange, ListName, Regex, Wildcard},
-    scheme::{Field, Identifier, List},
-    searcher::{EmptySearcher, MemmemSearcher},
-    strict_partial_ord::StrictPartialOrd,
-    types::{GetType, LhsValue, RhsValue, RhsValues, Type},
-};
+use super::Expr;
+use super::function_expr::FunctionCallExpr;
+use super::parse::FilterParser;
+use super::visitor::{Visitor, VisitorMut};
+use crate::ast::index_expr::{Compare, IndexExpr};
+use crate::compiler::Compiler;
+use crate::filter::CompiledExpr;
+use crate::lex::{Lex, LexErrorKind, LexResult, LexWith, expect, skip_space, span};
+use crate::range_set::RangeSet;
+use crate::rhs_types::{BytesExpr, ExplicitIpRange, ListName, Regex, Wildcard};
+use crate::scheme::{Field, Identifier, List};
+use crate::searcher::{EmptySearcher, MemmemSearcher};
+use crate::strict_partial_ord::StrictPartialOrd;
+use crate::types::{GetType, LhsValue, RhsValue, RhsValues, Type};
+use crate::{ExecutionContext, Scheme};
 use serde::{Serialize, Serializer};
 use sliceslice::MemchrSearcher;
 use std::cmp::Ordering;
@@ -798,29 +794,29 @@ impl Expr for ComparisonExpr {
 #[allow(clippy::bool_assert_comparison)]
 mod tests {
     use super::*;
+    use crate::ast::function_expr::{FunctionCallArgExpr, FunctionCallExpr};
+    use crate::ast::logical_expr::LogicalExpr;
+    use crate::execution_context::ExecutionContext;
+    use crate::functions::{
+        FunctionArgKind, FunctionArgs, FunctionDefinition, FunctionDefinitionContext,
+        FunctionParam, FunctionParamError, SimpleFunctionDefinition, SimpleFunctionImpl,
+        SimpleFunctionOptParam, SimpleFunctionParam,
+    };
+    use crate::lhs_types::{Array, Map};
+    use crate::list_matcher::{ListDefinition, ListMatcher};
+    use crate::rhs_types::{IpRange, RegexFormat};
+    use crate::scheme::{FieldIndex, IndexAccessError, Scheme};
+    use crate::types::ExpectedType;
     use crate::{
         BytesFormat, FieldRef, LhsValue, ParserSettings, SchemeBuilder, SimpleFunctionArgKind,
         TypedMap,
-        ast::{
-            function_expr::{FunctionCallArgExpr, FunctionCallExpr},
-            logical_expr::LogicalExpr,
-        },
-        execution_context::ExecutionContext,
-        functions::{
-            FunctionArgKind, FunctionArgs, FunctionDefinition, FunctionDefinitionContext,
-            FunctionParam, FunctionParamError, SimpleFunctionDefinition, SimpleFunctionImpl,
-            SimpleFunctionOptParam, SimpleFunctionParam,
-        },
-        lhs_types::{Array, Map},
-        list_matcher::{ListDefinition, ListMatcher},
-        rhs_types::{IpRange, RegexFormat},
-        scheme::{FieldIndex, IndexAccessError, Scheme},
-        types::ExpectedType,
     };
     use cidr::IpCidr;
     use serde::Deserialize;
+    use std::convert::TryFrom;
+    use std::iter::once;
+    use std::net::IpAddr;
     use std::sync::LazyLock;
-    use std::{convert::TryFrom, iter::once, net::IpAddr};
 
     fn any_function<'a>(args: FunctionArgs<'_, 'a>) -> Option<LhsValue<'a>> {
         match args.next()? {

@@ -1,7 +1,6 @@
+use crate::{Compare, ExecutionContext, LhsValue};
 use memchr::memmem::{Finder, FinderBuilder};
 use sliceslice::MemchrSearcher;
-
-use crate::{Compare, ExecutionContext, LhsValue};
 
 pub struct EmptySearcher;
 

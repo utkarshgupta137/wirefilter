@@ -1,5 +1,4 @@
-use crate::LhsValue;
-use crate::Type;
+use crate::{LhsValue, Type};
 use dyn_clone::DynClone;
 use serde::{Deserialize, Serialize};
 use std::any::Any;

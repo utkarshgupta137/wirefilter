@@ -10,13 +10,11 @@ use libc::c_char;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::de::DeserializeSeed;
 use std::cell::RefCell;
+use std::convert::TryFrom;
+use std::hash::Hasher;
+use std::io::{self, Write};
+use std::net::IpAddr;
 use std::ops::{Deref, DerefMut};
-use std::{
-    convert::TryFrom,
-    hash::Hasher,
-    io::{self, Write},
-    net::IpAddr,
-};
 use wirefilter::{AlwaysList, GetType, NeverList, Type, catch_panic};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");

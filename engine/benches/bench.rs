@@ -6,7 +6,9 @@ use std::alloc::System;
 static A: System = System;
 
 use criterion::{Bencher, Criterion, criterion_group, criterion_main};
-use std::{clone::Clone, fmt::Debug, net::IpAddr};
+use std::clone::Clone;
+use std::fmt::Debug;
+use std::net::IpAddr;
 use wirefilter::{
     Bytes, ExecutionContext, FilterAst, FunctionArgs, GetType, LhsValue, SchemeBuilder,
     SimpleFunctionArgKind, SimpleFunctionDefinition, SimpleFunctionImpl, SimpleFunctionParam, Type,

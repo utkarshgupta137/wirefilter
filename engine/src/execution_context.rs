@@ -1,8 +1,6 @@
-use crate::{
-    FieldRef, ListMatcher, ListRef, UnknownFieldError,
-    scheme::{Field, List, Scheme, SchemeMismatchError},
-    types::{GetType, LhsValue, LhsValueSeed, Type, TypeMismatchError},
-};
+use crate::scheme::{Field, List, Scheme, SchemeMismatchError};
+use crate::types::{GetType, LhsValue, LhsValueSeed, Type, TypeMismatchError};
+use crate::{FieldRef, ListMatcher, ListRef, UnknownFieldError};
 use serde::Serialize;
 use serde::de::{self, DeserializeSeed, Deserializer, MapAccess, SeqAccess, Visitor};
 use serde::ser::{SerializeMap, SerializeSeq, Serializer};

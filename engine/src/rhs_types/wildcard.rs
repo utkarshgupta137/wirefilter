@@ -2,10 +2,8 @@ use crate::lex::{LexResult, LexWith};
 use crate::rhs_types::bytes::{BytesExpr, lex_quoted_or_raw_string};
 use crate::{FilterParser, LexErrorKind};
 use serde::{Serialize, Serializer};
-use std::{
-    fmt::{self, Debug, Formatter},
-    hash::{Hash, Hasher},
-};
+use std::fmt::{self, Debug, Formatter};
+use std::hash::{Hash, Hasher};
 use thiserror::Error;
 use wildcard::WildcardToken;
 

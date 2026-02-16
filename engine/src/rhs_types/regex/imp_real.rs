@@ -1,8 +1,7 @@
-use regex_automata::MatchKind;
-use regex_automata::nfa::thompson::WhichCaptures;
-
 use super::Error;
 use crate::{ParserSettings, RegexFormat};
+use regex_automata::MatchKind;
+use regex_automata::nfa::thompson::WhichCaptures;
 use std::ops::Deref;
 use std::sync::Arc;
 

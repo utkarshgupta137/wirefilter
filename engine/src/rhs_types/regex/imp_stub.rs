@@ -1,6 +1,5 @@
-use thiserror::Error;
-
 use crate::{FilterParser, RegexFormat};
+use thiserror::Error;
 
 /// Dummy regex error.
 #[derive(Debug, PartialEq, Error)]

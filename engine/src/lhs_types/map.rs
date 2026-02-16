@@ -1,21 +1,15 @@
-use crate::{
-    TypeMismatchError,
-    lhs_types::{AsRefIterator, Bytes},
-    types::{CompoundType, GetType, IntoValue, LhsValue, LhsValueSeed, Type},
-};
-use serde::{
-    Serialize, Serializer,
-    de::{self, DeserializeSeed, Deserializer, MapAccess, SeqAccess, Visitor},
-    ser::{SerializeMap, SerializeSeq},
-};
-use std::{
-    borrow::Cow,
-    collections::BTreeMap,
-    fmt,
-    hash::{Hash, Hasher},
-};
-
-use super::{TypedArray, array::InnerArray};
+use super::TypedArray;
+use super::array::InnerArray;
+use crate::TypeMismatchError;
+use crate::lhs_types::{AsRefIterator, Bytes};
+use crate::types::{CompoundType, GetType, IntoValue, LhsValue, LhsValueSeed, Type};
+use serde::de::{self, DeserializeSeed, Deserializer, MapAccess, SeqAccess, Visitor};
+use serde::ser::{SerializeMap, SerializeSeq};
+use serde::{Serialize, Serializer};
+use std::borrow::Cow;
+use std::collections::BTreeMap;
+use std::fmt;
+use std::hash::{Hash, Hasher};
 
 #[derive(Debug, Clone)]
 pub(crate) enum InnerMap<'a> {

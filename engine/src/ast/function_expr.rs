@@ -1,26 +1,20 @@
-use super::{
-    ValueExpr,
-    parse::FilterParser,
-    visitor::{Visitor, VisitorMut},
+use super::ValueExpr;
+use super::parse::FilterParser;
+use super::visitor::{Visitor, VisitorMut};
+use crate::FunctionRef;
+use crate::ast::field_expr::{ComparisonExpr, ComparisonOp, ComparisonOpExpr};
+use crate::ast::index_expr::IndexExpr;
+use crate::ast::logical_expr::{LogicalExpr, UnaryOp};
+use crate::compiler::Compiler;
+use crate::filter::{CompiledExpr, CompiledValueExpr, CompiledValueResult};
+use crate::functions::{
+    ExactSizeChain, FunctionArgs, FunctionDefinition, FunctionDefinitionContext, FunctionParam,
+    FunctionParamError,
 };
-use crate::{
-    FunctionRef,
-    ast::{
-        field_expr::{ComparisonExpr, ComparisonOp, ComparisonOpExpr},
-        index_expr::IndexExpr,
-        logical_expr::{LogicalExpr, UnaryOp},
-    },
-    compiler::Compiler,
-    filter::{CompiledExpr, CompiledValueExpr, CompiledValueResult},
-    functions::{
-        ExactSizeChain, FunctionArgs, FunctionDefinition, FunctionDefinitionContext, FunctionParam,
-        FunctionParamError,
-    },
-    lex::{Lex, LexError, LexErrorKind, LexResult, LexWith, expect, skip_space, span},
-    lhs_types::Array,
-    scheme::Function,
-    types::{GetType, LhsValue, RhsValue, Type},
-};
+use crate::lex::{Lex, LexError, LexErrorKind, LexResult, LexWith, expect, skip_space, span};
+use crate::lhs_types::Array;
+use crate::scheme::Function;
+use crate::types::{GetType, LhsValue, RhsValue, Type};
 use serde::Serialize;
 use std::hash::{Hash, Hasher};
 use std::iter::once;
@@ -526,21 +520,17 @@ impl<'i> LexWith<'i, &FilterParser<'_>> for FunctionCallExpr {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{
-        SimpleFunctionArgKind,
-        ast::{
-            field_expr::{ComparisonExpr, ComparisonOpExpr, IdentifierExpr, OrderingOp},
-            logical_expr::{LogicalExpr, LogicalOp, ParenthesizedExpr},
-            parse::FilterParser,
-        },
-        functions::{
-            FunctionArgKind, FunctionArgKindMismatchError, FunctionArgs, SimpleFunctionDefinition,
-            SimpleFunctionImpl, SimpleFunctionOptParam, SimpleFunctionParam,
-        },
-        rhs_types::{BytesExpr, BytesFormat},
-        scheme::{FieldIndex, IndexAccessError, Scheme},
-        types::{RhsValues, Type, TypeMismatchError},
+    use crate::SimpleFunctionArgKind;
+    use crate::ast::field_expr::{ComparisonExpr, ComparisonOpExpr, IdentifierExpr, OrderingOp};
+    use crate::ast::logical_expr::{LogicalExpr, LogicalOp, ParenthesizedExpr};
+    use crate::ast::parse::FilterParser;
+    use crate::functions::{
+        FunctionArgKind, FunctionArgKindMismatchError, FunctionArgs, SimpleFunctionDefinition,
+        SimpleFunctionImpl, SimpleFunctionOptParam, SimpleFunctionParam,
     };
+    use crate::rhs_types::{BytesExpr, BytesFormat};
+    use crate::scheme::{FieldIndex, IndexAccessError, Scheme};
+    use crate::types::{RhsValues, Type, TypeMismatchError};
     use std::convert::TryFrom;
     use std::sync::LazyLock;
 
