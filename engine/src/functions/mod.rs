@@ -286,7 +286,7 @@ impl<'a> FunctionParam<'a> {
 pub struct FunctionDefinitionContext {
     inner: Box<dyn Any + Send + Sync>,
     clone_cb: fn(&(dyn Any + Send + Sync)) -> Box<dyn Any + Send + Sync>,
-    fmt_cb: fn(&(dyn Any + Send + Sync), &mut std::fmt::Formatter<'_>) -> std::fmt::Result,
+    fmt_cb: fn(&(dyn Any + Send + Sync), &mut fmt::Formatter<'_>) -> fmt::Result,
 }
 
 impl FunctionDefinitionContext {
@@ -298,8 +298,8 @@ impl FunctionDefinitionContext {
 
     fn fmt_any<T: Any + Debug + Send + Sync>(
         t: &(dyn Any + Send + Sync),
-        f: &mut std::fmt::Formatter<'_>,
-    ) -> std::fmt::Result {
+        f: &mut fmt::Formatter<'_>,
+    ) -> fmt::Result {
         t.downcast_ref::<T>().unwrap().fmt(f)
     }
 
@@ -364,8 +364,8 @@ impl Clone for FunctionDefinitionContext {
     }
 }
 
-impl std::fmt::Debug for FunctionDefinitionContext {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl Debug for FunctionDefinitionContext {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "FunctionDefinitionContext(")?;
         (self.fmt_cb)(&*self.inner, f)?;
         write!(f, ")")?;
@@ -409,7 +409,7 @@ pub trait FunctionDefinition: Debug + Send + Sync {
 
 // Simple function APIs
 
-type FunctionPtr = for<'i, 'a> fn(FunctionArgs<'i, 'a>) -> Option<LhsValue<'a>>;
+type FunctionPtr = for<'a> fn(FunctionArgs<'_, 'a>) -> Option<LhsValue<'a>>;
 
 /// Wrapper around a function pointer providing the runtime implementation.
 #[derive(Clone, Copy)]
@@ -422,7 +422,7 @@ impl SimpleFunctionImpl {
     }
 }
 
-impl fmt::Debug for SimpleFunctionImpl {
+impl Debug for SimpleFunctionImpl {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt.debug_tuple("SimpleFunctionImpl")
             .field(&(self.0 as *const ()))

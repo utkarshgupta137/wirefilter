@@ -261,10 +261,10 @@ impl ValueExpr for FunctionCallExpr {
             let first = args.remove(0);
 
             #[inline(always)]
-            fn compute<'s, 'a, I: ExactSizeIterator<Item = CompiledValueResult<'a>>>(
+            fn compute<'a, I: ExactSizeIterator<Item = CompiledValueResult<'a>>>(
                 first: CompiledValueResult<'a>,
                 call: &(
-                     dyn for<'b> Fn(FunctionArgs<'_, 'b>) -> Option<LhsValue<'b>> + Sync + Send + 's
+                     dyn for<'b> Fn(FunctionArgs<'_, 'b>) -> Option<LhsValue<'b>> + Sync + Send + '_
                  ),
                 return_type: Type,
                 f: impl Fn(LhsValue<'a>) -> I,

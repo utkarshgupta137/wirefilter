@@ -218,7 +218,7 @@ pub enum Status {
 /// Returns a pointer to the last error string if there was one or NULL.
 #[unsafe(no_mangle)]
 pub extern "C" fn wirefilter_get_last_error() -> *const c_char {
-    crate::LAST_ERROR.with_borrow(|last_error| last_error.as_c_str())
+    LAST_ERROR.with_borrow(|last_error| last_error.as_c_str())
 }
 
 /// Clears the last error string if there was one.
@@ -227,7 +227,7 @@ pub extern "C" fn wirefilter_get_last_error() -> *const c_char {
 /// until another error is written to it.
 #[unsafe(no_mangle)]
 pub extern "C" fn wirefilter_clear_last_error() {
-    crate::LAST_ERROR.with_borrow_mut(|last_error| {
+    LAST_ERROR.with_borrow_mut(|last_error| {
         last_error.clear();
     });
 }

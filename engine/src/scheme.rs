@@ -822,7 +822,7 @@ impl<'de> Deserialize<'de> for Scheme {
         impl<'de> Visitor<'de> for FieldMapVisitor {
             type Value = SchemeBuilder;
 
-            fn expecting(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+            fn expecting(&self, formatter: &mut Formatter<'_>) -> fmt::Result {
                 formatter.write_str("a wirefilter scheme")
             }
 

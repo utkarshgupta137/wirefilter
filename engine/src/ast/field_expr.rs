@@ -946,10 +946,10 @@ mod tests {
     pub struct NumMListDefinition {}
 
     impl ListDefinition for NumMListDefinition {
-        fn deserialize_matcher<'de>(
+        fn deserialize_matcher(
             &self,
             _: Type,
-            deserializer: &mut dyn erased_serde::Deserializer<'de>,
+            deserializer: &mut dyn erased_serde::Deserializer<'_>,
         ) -> Result<Box<dyn ListMatcher>, erased_serde::Error> {
             let matcher = erased_serde::deserialize::<NumMatcher>(deserializer)?;
             Ok(Box::new(matcher))
