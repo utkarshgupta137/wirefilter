@@ -11,7 +11,6 @@ use crate::types::{
     ExpectedType, ExpectedTypeList, GetType, LhsValue, RhsValue, Type, TypeMismatchError,
 };
 use std::any::Any;
-use std::convert::TryFrom;
 use std::fmt::{self, Debug};
 use std::iter::once;
 use thiserror::Error;

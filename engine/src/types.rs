@@ -9,7 +9,6 @@ use serde::de::{DeserializeSeed, Deserializer};
 use serde::{Deserialize, Serialize, Serializer};
 use std::cmp::Ordering;
 use std::collections::BTreeSet;
-use std::convert::TryFrom;
 use std::fmt::{self, Debug, Formatter};
 use std::iter::once;
 use std::net::{IpAddr, Ipv4Addr, Ipv6Addr};
@@ -189,6 +188,7 @@ macro_rules! declare_types {
             $($(# $vattrs)* $variant($ty),)*
         }
 
+        #[allow(single_use_lifetimes)]
         impl $(<$lt>)* GetType for $name $(<$lt>)* {
             fn get_type(&self) -> Type {
                 match self {
@@ -197,6 +197,7 @@ macro_rules! declare_types {
             }
         }
 
+        #[allow(single_use_lifetimes)]
         impl $(<$lt>)* Debug for $name $(<$lt>)* {
             fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
                 match self {

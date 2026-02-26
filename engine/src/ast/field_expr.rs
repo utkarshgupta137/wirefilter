@@ -794,9 +794,8 @@ impl Expr for ComparisonExpr {
 #[expect(clippy::bool_assert_comparison)]
 mod tests {
     use super::*;
-    use crate::ast::function_expr::{FunctionCallArgExpr, FunctionCallExpr};
+    use crate::ast::function_expr::FunctionCallArgExpr;
     use crate::ast::logical_expr::LogicalExpr;
-    use crate::execution_context::ExecutionContext;
     use crate::functions::{
         FunctionArgKind, FunctionArgs, FunctionDefinition, FunctionDefinitionContext,
         FunctionParam, FunctionParamError, SimpleFunctionDefinition, SimpleFunctionImpl,
@@ -805,17 +804,14 @@ mod tests {
     use crate::lhs_types::{Array, Map};
     use crate::list_matcher::{ListDefinition, ListMatcher};
     use crate::rhs_types::{IpRange, RegexFormat};
-    use crate::scheme::{FieldIndex, IndexAccessError, Scheme};
+    use crate::scheme::{FieldIndex, IndexAccessError};
     use crate::types::ExpectedType;
     use crate::{
-        BytesFormat, FieldRef, LhsValue, ParserSettings, SchemeBuilder, SimpleFunctionArgKind,
-        TypedMap,
+        BytesFormat, FieldRef, ParserSettings, SchemeBuilder, SimpleFunctionArgKind, TypedMap,
     };
     use cidr::IpCidr;
     use serde::Deserialize;
-    use std::convert::TryFrom;
     use std::iter::once;
-    use std::net::IpAddr;
     use std::sync::LazyLock;
 
     fn any_function<'a>(args: FunctionArgs<'_, 'a>) -> Option<LhsValue<'a>> {

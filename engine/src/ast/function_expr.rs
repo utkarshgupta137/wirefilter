@@ -509,18 +509,15 @@ impl<'i> LexWith<'i, &FilterParser<'_>> for FunctionCallExpr {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::SimpleFunctionArgKind;
-    use crate::ast::field_expr::{ComparisonExpr, ComparisonOpExpr, IdentifierExpr, OrderingOp};
-    use crate::ast::logical_expr::{LogicalExpr, LogicalOp, ParenthesizedExpr};
-    use crate::ast::parse::FilterParser;
+    use crate::ast::field_expr::{ComparisonOpExpr, IdentifierExpr, OrderingOp};
+    use crate::ast::logical_expr::{LogicalOp, ParenthesizedExpr};
     use crate::functions::{
-        FunctionArgKind, FunctionArgKindMismatchError, FunctionArgs, SimpleFunctionDefinition,
-        SimpleFunctionImpl, SimpleFunctionOptParam, SimpleFunctionParam,
+        FunctionArgKind, FunctionArgKindMismatchError, SimpleFunctionArgKind,
+        SimpleFunctionDefinition, SimpleFunctionImpl, SimpleFunctionOptParam, SimpleFunctionParam,
     };
     use crate::rhs_types::{BytesExpr, BytesFormat};
     use crate::scheme::{FieldIndex, IndexAccessError, Scheme};
-    use crate::types::{RhsValues, Type, TypeMismatchError};
-    use std::convert::TryFrom;
+    use crate::types::{RhsValues, TypeMismatchError};
     use std::sync::LazyLock;
 
     fn any_function<'a>(args: FunctionArgs<'_, 'a>) -> Option<LhsValue<'a>> {

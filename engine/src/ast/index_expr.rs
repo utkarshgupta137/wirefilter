@@ -525,11 +525,9 @@ impl<'a> Iterator for MapEachIterator<'a, '_> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::ast::field_expr::IdentifierExpr;
     use crate::{
-        Array, FieldIndex, FilterParser, FunctionArgs, FunctionCallArgExpr, FunctionCallExpr,
-        Scheme, SchemeBuilder, SimpleFunctionArgKind, SimpleFunctionDefinition, SimpleFunctionImpl,
-        SimpleFunctionParam,
+        FunctionArgs, FunctionCallArgExpr, FunctionCallExpr, Scheme, SchemeBuilder,
+        SimpleFunctionArgKind, SimpleFunctionDefinition, SimpleFunctionImpl, SimpleFunctionParam,
     };
     use std::sync::LazyLock;
 

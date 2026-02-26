@@ -7,7 +7,6 @@ use libc::c_char;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::de::DeserializeSeed;
 use std::cell::RefCell;
-use std::convert::TryFrom;
 use std::hash::Hasher;
 use std::io::{self, Write};
 use std::net::IpAddr;
@@ -137,6 +136,7 @@ macro_rules! wrap_type {
             }
         }
 
+        #[allow(single_use_lifetimes)]
         impl$(<$ffi_lt>)? DerefMut for $ffi$(<$ffi_lt>)? {
             fn deref_mut(&mut self) -> &mut Self::Target {
                 &mut self.0
@@ -498,8 +498,8 @@ pub extern "C" fn wirefilter_serialize_type_to_json(ty: CType) -> SerializingRes
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn wirefilter_create_execution_context<'e, 's: 'e>(
-    scheme: &'s Scheme,
+pub extern "C" fn wirefilter_create_execution_context<'e>(
+    scheme: &Scheme,
 ) -> Box<ExecutionContext<'e>> {
     Box::new(ExecutionContext(wirefilter::ExecutionContext::new(scheme)))
 }
@@ -888,7 +888,7 @@ mod ffi_test {
         wirefilter_build_scheme(builder)
     }
 
-    fn create_execution_context<'e, 's: 'e>(scheme: &'s Scheme) -> Box<ExecutionContext<'e>> {
+    fn create_execution_context<'e>(scheme: &Scheme) -> Box<ExecutionContext<'e>> {
         let mut exec_context = wirefilter_create_execution_context(scheme);
         let invalid_key = &b"\xc3\x28"[..];
 
